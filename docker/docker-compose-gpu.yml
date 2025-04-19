@@ -25,10 +25,13 @@ services:
       - ./llm_factories.json:/ragflow/conf/llm_factories.json
       - ./service_conf.yaml.template:/ragflow/conf/service_conf.yaml.template
     env_file: .env
+    ipc: host
+    shm_size: 8g
     environment:
       - TZ=${TIMEZONE}
       - HF_ENDPOINT=${HF_ENDPOINT}
       - MACOS=${MACOS}
+      - NCCL_DEBUG=INFO
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9380"]
       interval: 60s
